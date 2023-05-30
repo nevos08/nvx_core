@@ -1,0 +1,2 @@
+NVX = {}
+NVX.Shared = Shared
