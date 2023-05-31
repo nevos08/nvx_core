@@ -2,9 +2,8 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
         if NetworkIsSessionStarted() then
-            DoScreenFadeOut(0)
-            Wait(5000)
-            DoScreenFadeIn(5000)
+            TriggerEvent("nvx_core:playerJoined")
+            TriggerServerEvent("nvx_core:playerJoined")
             return
         end
     end
