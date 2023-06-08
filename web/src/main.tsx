@@ -8,7 +8,14 @@ import LocalesProvider from './context/LocalesContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-        <MantineProvider withGlobalStyles withNormalizeCSS>
+        <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+                colorScheme: 'dark',
+                fontFamily: 'Source Sans Pro',
+            }}
+        >
             <LocalesProvider>
                 <App />
             </LocalesProvider>

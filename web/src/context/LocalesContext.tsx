@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 interface ILocalesContext {
-    getLocales: (key: string) => string
+    locales: any
 }
 
 const LocalesContext = createContext({})
@@ -12,18 +12,11 @@ interface LocalesProviderProps {
 }
 
 export default function LocalesProvider({ children }: LocalesProviderProps) {
-    const [locales, setLocales] = useState<any>(null)
-
-    const getLocales = (key: string) => {
-        const local = locales[key]
-        if (!local) return 'No locale provided.'
-        return local
-    }
+    const [locales, setLocales] = useState<any>({})
 
     useEffect(() => {
         const handler = ({ data }: INUIEvent) => {
             if (data.eventName === 'setLocales') {
-                console.log('got locales')
                 setLocales(data.locales)
             }
         }
@@ -34,5 +27,5 @@ export default function LocalesProvider({ children }: LocalesProviderProps) {
         }
     }, [])
 
-    return <LocalesContext.Provider value={{ getLocales }}>{children}</LocalesContext.Provider>
+    return <LocalesContext.Provider value={{ locales }}>{children}</LocalesContext.Provider>
 }

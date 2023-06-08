@@ -1,3 +1,16 @@
 {
-  "NUI": {}
+  "deferrals": {
+    "loadingAccount": "Dein Account wird geladen...",
+    "creatingAccount": "Es wird ein neuer Account für dich angelegt..."
+  },
+  "notWhitelisted": "Du bist nicht gewhitelisted.",
+  "errorLoadingAccount": "Beim Laden deines Accounts ist ein Fehler aufgetreten.",
+
+  "NUI": {
+    "Multicharacter": {
+      "title": "Charakter wählen",
+      "noCharacters": "Keine Charakter gefunden.",
+      "createButton": "Charakter erstellen"
+    }
+  }
 }

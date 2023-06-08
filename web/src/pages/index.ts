@@ -1,3 +1,6 @@
 import { FC } from 'react'
 
-export const PAGE_LIST: Record<string, FC> = {}
+import Multicharacter from './Multicharacter'
+import Creator from './Creator'
+
+export const PAGE_LIST: Record<string, FC> = { Multicharacter, Creator }
