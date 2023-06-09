@@ -2,6 +2,7 @@ local camera
 
 RegisterNetEvent("nvx_core:creator:setup", function()
     ShutdownLoadingScreen()
+    ShutdownLoadingScreenNui()
 
     camera = CreateCam("DEFAULT_SCRIPTED_CAMERA", false)
     SetCamCoord(camera, 775.06, 983.20, 322.87)
@@ -43,9 +44,9 @@ RegisterNUICallback("creator:submit", function(data, cb)
     if Config.Skin.Enabled then
         Wait(200)
         DoScreenFadeIn(500)
+        FreezeEntityPosition(PlayerPedId(), false)
         exports["fivem-appearance"]:startPlayerCustomization(function(skin)
                 if skin then
-                    FreezeEntityPosition(cache.ped, true)
                     DoScreenFadeOut(500)
                     Wait(500)
 

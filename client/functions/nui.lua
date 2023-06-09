@@ -1,4 +1,5 @@
 local _pages = {}
+local _hiddenPersistentPages = {}
 local _pageReadyEvents = {}
 
 local function UpdatePages()
@@ -26,6 +27,23 @@ function Core.UI.ClosePage(pageName)
         end
     end
     UpdatePages()
+end
+
+function Core.UI.TogglePersistentPage(pageName, state)
+    if state then
+        for k, v in pairs(_hiddenPersistentPages) do
+            if v == pageName then
+                table.remove(_hiddenPersistentPages, k)
+                break
+            end
+        end
+    else
+        if not lib.table.contains(_hiddenPersistentPages, pageName) then
+            table.insert(_hiddenPersistentPages, pageName)
+        end
+    end
+
+    Core.UI.emit("setHiddenPersistentPages", { hiddenPersistentPages = _hiddenPersistentPages })
 end
 
 function Core.UI.emit(eventName, data)

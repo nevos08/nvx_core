@@ -32,9 +32,6 @@ export default function Creator() {
 
                 return
             },
-            dob: (value) => {
-                return true
-            },
             height: (value) => {
                 if (!value || value < 150 || value > 220) {
                     return locales.Creator?.heightInvalid || 'Deine Körpergröße muss zwischen 150 und 220 liegen.'
