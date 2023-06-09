@@ -94,9 +94,8 @@ function Core.Functions.CreateCharacter(license, charData, skin)
         MySQL.query(
             "SELECT JSON_UNQUOTE(JSON_EXTRACT(meta, '$.phoneNumber')) AS phoneNumber FROM characters HAVING phoneNumber = ?",
             { meta.phoneNumber }, function(res)
-                NVX.Shared.Table.Print(res)
                 if not res[1] then
-                    unique = true
+                    uniquePhoneNumber = true
                 end
             end)
 

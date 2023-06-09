@@ -106,6 +106,7 @@ function Character({ uuid, name }: Character) {
         <Box
             sx={{
                 width: '100%',
+                marginBlock: '5px',
                 padding: '10px 20px',
                 backgroundColor: '#2e2e2e',
                 border: '1px solid #3e3e3e',

@@ -36,7 +36,12 @@ server_scripts {
     "server/init.lua",
     "server/functions/*.lua",
     "server/classes/*.lua",
-    "server/events.lua"
+    "server/commands/*.lua",
+    "server/events.lua",
+
+    -- Plugins
+    "plugins/**/server/*.lua",
+    "plugins/**/server/**/*.lua",
 }
 
 client_scripts {
@@ -44,7 +49,11 @@ client_scripts {
     "client/functions/*.lua",
     "client/nui/**/*.lua",
     "client/events.lua",
-    "client/main.lua"
+    "client/main.lua",
+
+    -- Plugins
+    "plugins/**/client/*.lua",
+    "plugins/**/client/**/*.lua",
 }
 
 dependencies {

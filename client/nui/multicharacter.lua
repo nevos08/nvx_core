@@ -28,6 +28,8 @@ RegisterNetEvent("nvx_core:multicharacter:setup", function(newChars, newSlots)
     RenderScriptCams(true, true, 0, true, true)
 
     TaskStandStill(cache.ped, -1)
+    SetEntityInvincible(cache.ped, true)
+    SetEntityVisible(cache.ped, true, false)
 
     if characters[1] then
         currentCharacterIndex = 1
@@ -83,6 +85,23 @@ RegisterNUICallback("multicharacter:chooseCharacter", function(data, cb)
     cb("ok")
 end)
 
-RegisterNUICallback("multicharacter:create", function(data, cb)
+RegisterNUICallback("multicharacter:create", function(_, cb)
+    Core.UI.ClosePage("Multicharacter")
+    Core.UI.SetFocus(false, false)
+
+    DoScreenFadeOut(1000)
+    Wait(1000)
+
+    if camera then
+        DestroyCam(camera, true)
+        RenderScriptCams(false, false, 0, false, false)
+        camera = nil
+    end
+
+    ClearPedTasks(cache.ped)
+    ClearPedTasksImmediately(cache.ped)
+    SetEntityInvincible(cache.ped, false)
+
+    TriggerEvent("nvx_core:creator:setup")
     cb("ok")
 end)

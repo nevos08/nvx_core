@@ -35,10 +35,6 @@ RegisterNetEvent("nvx_core:playerJoined", function()
     local license = NVX.Functions.Player.GetLicense(playerId)
     local account = Core.Functions.GetPlayerAccount(license)
 
-    local res = MySQL.query.await(
-        "SELECT JSON_UNQUOTE(JSON_EXTRACT(meta, '$.phoneNumber')) AS phoneNumber FROM characters")
-    print(NVX.Shared.Table.Dump(res))
-
     -- Add the players license to his state bag
     Player(playerId).state:set("license", license, false)
     Player(playerId).state:set("group", account.group, false)

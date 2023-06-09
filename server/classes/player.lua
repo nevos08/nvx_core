@@ -38,14 +38,17 @@ function NVXPlayer(playerId, license, character)
 
     function self.getPosition(asVec)
         local position = GetEntityCoords(self.getPed(), true)
+        local heading = GetEntityHeading(self.getPed())
 
         position = {
             x = NVX.Shared.Math.Round(position.x, 2),
             y = NVX.Shared.Math.Round(position.y, 2),
-            z = NVX.Shared.Math.Round(position.z, 2)
+            z = NVX.Shared.Math.Round(position.z, 2),
+            heading = NVX.Shared.Math.Round(heading, 2)
         }
 
-        self.position = vec3(position.x, position.y, position.z)
+        self.position = vec4(NVX.Shared.Math.Round(position.x, 2), NVX.Shared.Math.Round(position.y, 2),
+            NVX.Shared.Math.Round(position.z, 2), NVX.Shared.Math.Round(heading, 2))
         return asVec and self.position or position
     end
 

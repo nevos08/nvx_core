@@ -1,5 +1,6 @@
 import { Box, Button, Center, Group, NumberInput, Radio, TextInput, Title, useMantineTheme } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { DatePickerInput } from '@mantine/dates'
 import { useLocales } from '../../context/LocalesContext'
 import { emit } from '../../lib/nui'
 
@@ -11,7 +12,8 @@ export default function Creator() {
         initialValues: {
             firstName: '',
             lastName: '',
-            height: 150,
+            dob: new Date('1990-01-01'),
+            height: 180,
             nationality: 'United States',
             sex: 'male',
         },
@@ -30,16 +32,19 @@ export default function Creator() {
 
                 return
             },
+            dob: (value) => {
+                return true
+            },
             height: (value) => {
                 if (!value || value < 150 || value > 220) {
-                    return locales.Creator?.invalidHeight || 'Deine Körpergröße muss zwischen 150 und 220 liegen.'
+                    return locales.Creator?.heightInvalid || 'Deine Körpergröße muss zwischen 150 und 220 liegen.'
                 }
 
                 return
             },
             nationality: (value) => {
                 if (!value || value.length < 3) {
-                    return locales.Creator?.invalidNationality || 'Deine Nationalität ist ungültig.'
+                    return locales.Creator?.nationalityInvalid || 'Deine Nationalität ist ungültig.'
                 }
 
                 return
@@ -89,6 +94,17 @@ export default function Creator() {
                         size="md"
                         label={locales.Creator?.lastName || 'Nachname'}
                         {...form.getInputProps('lastName')}
+                    />
+
+                    <DatePickerInput
+                        withAsterisk
+                        mt="10px"
+                        size="md"
+                        label={locales.Creator?.dob || 'Geburtsdatum'}
+                        valueFormat="DD.MM.YYYY"
+                        minDate={new Date('1930-01-01')}
+                        maxDate={new Date('2008-12-31')}
+                        {...form.getInputProps('dob')}
                     />
 
                     <NumberInput

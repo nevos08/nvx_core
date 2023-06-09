@@ -11,5 +11,5 @@ function Shared.Math.Round(value, decimalPoints)
     end
 
     local power = 10 ^ decimalPoints
-    return math.floor((value * power) + 0.5 / power)
+    return math.floor(((value * power) + 0.5) / (power))
 end

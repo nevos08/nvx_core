@@ -11,6 +11,23 @@
       "title": "Charakter wählen",
       "noCharacters": "Keine Charakter gefunden.",
       "createButton": "Charakter erstellen"
+    },
+    "Creator": {
+      "title": "Charakter erstellen",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "dob": "Geburtsdatum",
+      "height": "Körpergröße",
+      "nationality": "Nationalität",
+      "sex": "Geschlecht",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "submit": "Bestätigen",
+      "firstNameInvalid": "Der Vorname muss zwischen 3 und 25 Zeichen lang sein.",
+      "lastNameInvalid": "Der Nachname muss zwischen 3 und 25 Zeichen lang sein.",
+      "dobInvalid": "Dein Geburtsdatum ist ungültig.",
+      "heightInvalid": "Deine Körpergröße muss zwischen 150 und 220 liegen.",
+      "nationalityInvalid": "Deine Nationalität ist ungültig."
     }
   }
 }

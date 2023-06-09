@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "setup": "node scripts/build.js",
+    "ui:build": "cd web && pnpm i && pnpm run build",
+    "ui:dev": "cd web && pnpm i && pnpm run dev"
+  }
+}
