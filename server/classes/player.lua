@@ -6,6 +6,7 @@ function NVXPlayer(playerId, license, character)
     self.uuid = character.uuid
     self.details = character.details
     self.position = character.position
+    self.meta = character.meta
 
     if Config.Skin.Enabled then
         self.skin = character.skin
@@ -52,18 +53,40 @@ function NVXPlayer(playerId, license, character)
         return { position = self.position, skin = self.skin }
     end
 
+    -- Only use this if you know what you're doing. Can screw up things.
+    function self.set(fieldName, value, save)
+        self[fieldName] = value
+
+        if save then
+            self.saveField(fieldName)
+        end
+    end
+
+    function self.get(fieldName)
+        return self[fieldName]
+    end
+
+    function self.setMeta(key, value)
+        self.meta[key] = value
+    end
+
+    function self.getMeta(key)
+        return self.meta[key]
+    end
+
     function self.emit(eventName, ...)
         TriggerClientEvent(eventName, self.playerId, ...)
     end
 
     function self.save()
-        MySQL.prepare.await("UPDATE characters SET `position` = ?, `skin` = ? WHERE uuid = ?",
+        MySQL.prepare.await("UPDATE characters SET position = ?, skin = ? WHERE uuid = ?",
             { json.encode(self.getPosition(false)), Config.Skin.Enabled and self.skin or "{}", self.uuid })
         print("[nvx_core] Saved player with license ", self.license)
     end
 
-    function self.saveField(fieldName, value)
-        MySQL.prepare.await("UPDATE characters SET `" .. fieldName .. "` = ? WHERE uuid = ?", { value, self.uuid })
+    function self.saveField(fieldName)
+        MySQL.prepare.await("UPDATE characters SET `" .. fieldName .. "` = ? WHERE uuid = ?",
+            { self[fieldName], self.uuid })
     end
 
     function self.onTick()

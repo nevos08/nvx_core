@@ -9,8 +9,19 @@ RegisterNetEvent("nvx_core:playerLoaded", function(playerData)
         model = "mp_m_freemode_01",
         skipFade = true
     }, function()
-        if not playerData.skin then
+        if not playerData.skin and Config.Skin.Enabled then
+            exports["fivem-appearance"]:startPlayerCustomization(function(skin)
 
+            end, {
+                ped = true,
+                headBlend = true,
+                faceFeatures = true,
+                headOverlays = true,
+                components = true,
+                props = true,
+                allowExit = false,
+                tattoos = true
+            })
         end
 
         exports["fivem-appearance"]:setPlayerAppearance(playerData.skin)
@@ -19,7 +30,17 @@ RegisterNetEvent("nvx_core:playerLoaded", function(playerData)
         TriggerServerEvent("nvx_core:playerSpawned")
 
         DoScreenFadeIn(1000)
-        FreezeEntityPosition(cache.ped, false)
-        SetEntityInvincible(cache.ped, false)
+        while not IsScreenFadedIn() do
+            Wait(10)
+        end
+
+        SwitchInPlayer(PlayerPedId())
+
+        while IsPlayerSwitchInProgress() do
+            Wait(100)
+        end
+
+        FreezeEntityPosition(PlayerPedId(), false)
+        SetEntityInvincible(PlayerPedId(), false)
     end)
 end)

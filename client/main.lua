@@ -6,6 +6,9 @@ Citizen.CreateThread(function()
             DoScreenFadeOut(0)
             DisplayRadar(false)
 
+            DisableAllControlActions(0)
+            DisableAllControlActions(2)
+
             Wait(500)
             TriggerServerEvent("nvx_core:playerJoined")
             return

@@ -4,7 +4,8 @@ Config.Locales = "de"
 Config.Default = {
     Group = "user",                            -- Only change this if you know what you're doing. This is the default permission role a user will get when his account is created in the database.
     Position = { x = 0.0, y = 0.0, z = 70.0 }, -- This is the default position the player will spawn at
-    Money = 1000.52
+    Money = 1000.52,
+    Meta = {}
 }
 
 Config.Creator = {
@@ -26,3 +27,7 @@ Config.Whitelist = {
     Enabled = true,
     DefaultStatus = true, -- Should the player be whitelisted automatically if his account was created? You can ignore this if the whitelist system is disabled.
 }
+
+Config.GeneratePhoneNumber = function() -- This function is used to generate a phone number for each player
+    return 555 .. math.random(100000, 999999)
+end

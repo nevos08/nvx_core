@@ -2,11 +2,13 @@ NVX = {
     PlayerLoaded = false,
     PlayerData = {},
     Shared = Shared,
-    UI = {},
     Functions = {
         Player = {}
     }
 }
+
+Core = {}
+Core.UI = {}
 
 exports("GetObject", function()
     return NVX

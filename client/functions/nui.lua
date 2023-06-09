@@ -1,5 +1,3 @@
-NVX.UI = {}
-
 local _pages = {}
 local _pageReadyEvents = {}
 
@@ -7,7 +5,7 @@ local function UpdatePages()
     SendNUIMessage({ eventName = "setPages", pages = _pages })
 end
 
-function NVX.UI.OpenPage(pageName)
+function Core.UI.OpenPage(pageName)
     if lib.table.contains(_pages, pageName) then
         return
     end
@@ -16,7 +14,7 @@ function NVX.UI.OpenPage(pageName)
     UpdatePages()
 end
 
-function NVX.UI.ClosePage(pageName)
+function Core.UI.ClosePage(pageName)
     if not lib.table.contains(_pages, pageName) then
         return
     end
@@ -30,16 +28,16 @@ function NVX.UI.ClosePage(pageName)
     UpdatePages()
 end
 
-function NVX.UI.emit(eventName, data)
+function Core.UI.emit(eventName, data)
     local messageData = lib.table.merge({ eventName = eventName }, data)
     SendNUIMessage(messageData)
 end
 
-function NVX.UI.SetFocus(hasFocus, hasCursor)
+function Core.UI.SetFocus(hasFocus, hasCursor)
     SetNuiFocus(hasFocus, hasCursor)
 end
 
-function NVX.UI.OnPageReady(pageName, cb)
+function Core.UI.OnPageReady(pageName, cb)
     _pageReadyEvents[pageName] = cb
 end
 

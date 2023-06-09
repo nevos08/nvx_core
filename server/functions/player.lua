@@ -28,5 +28,5 @@ end
 
 -- Events
 RegisterNetEvent("nvx_core:player:setPosition", function(pos)
-    NVX.Functions.Player.SetPosition(playerId, pos)
+    NVX.Functions.Player.SetPosition(source, pos)
 end)

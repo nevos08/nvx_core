@@ -1,3 +1,17 @@
+local function formatCharacter(character)
+    if not character then
+        return
+    end
+
+    character.details = json.decode(character.details) or {}
+    character.skin = json.decode(character.skin) or {}
+
+    local pos = json.decode(character.position) or Config.Default.Position
+    character.position = vec3(pos.x, pos.y, pos.z)
+
+    return character
+end
+
 ---Fetches a users account from the database by their rockstar license
 ---@param license string
 function Core.Functions.GetPlayerAccount(license)
@@ -36,6 +50,19 @@ end
 ---@param license string
 function Core.Functions.GetPlayerCharacters(license)
     local res = MySQL.prepare.await("SELECT * FROM characters WHERE license = ?", { license })
+
+    if not res then
+        return
+    end
+
+    if res.uuid then
+        res = formatCharacter(res)
+    else
+        for k, _ in pairs(res) do
+            res[k] = formatCharacter(res[k])
+        end
+    end
+
     return res
 end
 
@@ -58,11 +85,29 @@ end
 
 function Core.Functions.CreateCharacter(license, charData, skin)
     local uuid = Core.Functions.GenerateUUID()
+    local meta = Config.Default.Meta or {}
+
+    -- Generate a unique phoneNumber for each player
+    meta.phoneNumber = tonumber(Config.GeneratePhoneNumber())
+    local uniquePhoneNumber = false
+    while not uniquePhoneNumber do
+        MySQL.query(
+            "SELECT JSON_UNQUOTE(JSON_EXTRACT(meta, '$.phoneNumber')) AS phoneNumber FROM characters HAVING phoneNumber = ?",
+            { meta.phoneNumber }, function(res)
+                NVX.Shared.Table.Print(res)
+                if not res[1] then
+                    unique = true
+                end
+            end)
+
+        Wait(100)
+    end
+
 
     MySQL.insert.await(
-        "INSERT INTO characters (`uuid`, `license`, `details`, `position`, `skin`, `money`) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO characters (`uuid`, `license`, `details`, `position`, `skin`, `money`, `meta`) VALUES (?, ?, ?, ?, ?, ?, ?)",
         { uuid, license, json.encode(charData), json.encode(Config.Default.Position), json.encode(skin) or nil,
-            Config.Default.Money })
+            Config.Default.Money, json.encode(meta) })
 
     return uuid
 end
@@ -73,11 +118,7 @@ function Core.Functions.GetCharacter(uuid)
         return
     end
 
-    character.details = json.decode(character.details) or {}
-    character.skin = json.decode(character.skin) or {}
-
-    local pos = json.decode(character.position) or Config.Default.Position
-    character.position = vec3(pos.x, pos.y, pos.z)
+    character = formatCharacter(character)
 
     return character
 end

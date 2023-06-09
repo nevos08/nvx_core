@@ -16,15 +16,15 @@ RegisterNetEvent("nvx_core:creator:setup", function()
     DoScreenFadeIn(500)
     Wait(500)
 
-    NVX.UI.OpenPage("Creator")
+    Core.UI.OpenPage("Creator")
     SetNuiFocus(true, true)
 end)
 
 RegisterNUICallback("creator:submit", function(data, cb)
-    NVX.UI.ClosePage("Creator")
+    Core.UI.ClosePage("Creator")
 
     DoScreenFadeOut(500)
-    Wait(700)
+    Wait(600)
 
     if camera then
         DestroyCam(camera, true)
@@ -47,6 +47,13 @@ RegisterNUICallback("creator:submit", function(data, cb)
                 if skin then
                     FreezeEntityPosition(cache.ped, true)
                     DoScreenFadeOut(500)
+                    Wait(500)
+
+                    SwitchOutPlayer(cache.ped, 0, 1)
+                    while GetPlayerSwitchState() ~= 5 do
+                        Wait(0)
+                    end
+
                     TriggerServerEvent("nvx_core:createCharacter", data, skin)
                 end
             end,
@@ -61,6 +68,10 @@ RegisterNUICallback("creator:submit", function(data, cb)
                 tattoos = true
             })
     else
+        SwitchOutPlayer(cache.ped, 0, 1)
+        while GetPlayerSwitchState() ~= 5 do
+            Wait(0)
+        end
         TriggerServerEvent("nvx_core:createCharacter", data)
     end
 

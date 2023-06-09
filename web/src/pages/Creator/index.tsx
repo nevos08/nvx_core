@@ -121,7 +121,7 @@ export default function Creator() {
                         </Group>
                     </Radio.Group>
 
-                    <Button size="md" fullWidth sx={{ marginTop: '15px' }} type="submit">
+                    <Button variant="light" size="md" fullWidth sx={{ marginTop: '15px' }} type="submit">
                         {locales.Creator?.submit || 'Bestätigen'}
                     </Button>
                 </form>

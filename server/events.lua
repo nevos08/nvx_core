@@ -35,6 +35,10 @@ RegisterNetEvent("nvx_core:playerJoined", function()
     local license = NVX.Functions.Player.GetLicense(playerId)
     local account = Core.Functions.GetPlayerAccount(license)
 
+    local res = MySQL.query.await(
+        "SELECT JSON_UNQUOTE(JSON_EXTRACT(meta, '$.phoneNumber')) AS phoneNumber FROM characters")
+    print(NVX.Shared.Table.Dump(res))
+
     -- Add the players license to his state bag
     Player(playerId).state:set("license", license, false)
     Player(playerId).state:set("group", account.group, false)
@@ -58,8 +62,24 @@ RegisterNetEvent("nvx_core:playerJoined", function()
         -- Setup the Multicharacter UI
         NVX.Functions.Player.SetPosition(playerId, Config.Multicharacter.Position)
 
+        local minimalCharacters = {}
+
+        if characters.uuid then
+            table.insert(minimalCharacters,
+                {
+                    name = characters.details.firstName .. " " .. characters.details.lastName,
+                    uuid = characters.uuid,
+                    skin = characters.skin
+                })
+        else
+            for _, v in pairs(characters) do
+                table.insert(minimalCharacters,
+                    { name = v.details.firstName .. " " .. v.details.lastName, uuid = v.uuid, skin = v.skin })
+            end
+        end
+
         Wait(100)
-        TriggerClientEvent("nvx_core:multicharacter:setup", playerId, characters, account.slots)
+        TriggerClientEvent("nvx_core:multicharacter:setup", playerId, minimalCharacters, account.slots)
     else
         -- Play with character
         Core.Functions.SelectCharacter(playerId, characters.uuid)
@@ -72,6 +92,16 @@ RegisterNetEvent("nvx_core:createCharacter", function(charData, skin)
 
     local uuid = Core.Functions.CreateCharacter(license, charData, skin)
     Core.Functions.SelectCharacter(playerId, uuid)
+end)
+
+RegisterNetEvent("nvx_core:selectCharacter", function(uuid)
+    if Core.Players[tonumber(source)] ~= nil then
+        print("[nvx_core] Player with id " ..
+            source .. " tried to select a character although he has one selected already.")
+        return
+    end
+
+    Core.Functions.SelectCharacter(source, uuid)
 end)
 
 RegisterNetEvent("nvx_core:onPlayerTick", function()

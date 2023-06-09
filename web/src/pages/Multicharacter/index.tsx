@@ -4,7 +4,7 @@ import { useLocales } from '../../context/LocalesContext'
 import { emit } from '../../lib/nui'
 
 type Character = {
-    identifier: string
+    uuid: string
     name: string
 }
 
@@ -12,12 +12,7 @@ export default function Multicharacter() {
     const theme = useMantineTheme()
     const { locales } = useLocales()
 
-    const [characters, setCharacters] = useState<Character[]>([
-        {
-            identifier: '123',
-            name: 'John Doe',
-        },
-    ])
+    const [characters, setCharacters] = useState<Character[]>([])
     const [slots, setSlots] = useState<number>(2)
 
     const onCreate = () => {
@@ -28,7 +23,6 @@ export default function Multicharacter() {
         emit('pageReady', { pageName: 'Multicharacter' })
 
         const handler = ({ data }: { data: { eventName: string; [key: string]: any } }) => {
-            console.log(data.eventName, data.characters, data.slots)
             if (data.eventName == 'setData') {
                 setCharacters(data.characters)
                 setSlots(data.slots)
@@ -65,9 +59,7 @@ export default function Multicharacter() {
 
                 <Box my="5px">
                     {characters.length > 0 ? (
-                        characters.map((character) => (
-                            <Character identifier={character.identifier} name={character.name} />
-                        ))
+                        characters.map((character) => <Character uuid={character.uuid} name={character.name} />)
                     ) : (
                         <Center
                             sx={{
@@ -85,7 +77,12 @@ export default function Multicharacter() {
                 </Box>
 
                 {characters.length < slots && (
-                    <Button sx={{ width: '100%', marginTop: '5px', transition: '.2s' }} size="md" onClick={onCreate}>
+                    <Button
+                        variant="light"
+                        sx={{ width: '100%', marginTop: '5px', transition: '.2s' }}
+                        size="md"
+                        onClick={onCreate}
+                    >
                         {locales.Multicharacter?.createButton || 'Charakter erstellen'}
                     </Button>
                 )}
@@ -93,15 +90,16 @@ export default function Multicharacter() {
         </Center>
     )
 }
-function Character({ identifier, name }: Character) {
+
+function Character({ uuid, name }: Character) {
     const theme = useMantineTheme()
 
     const onMouseEnter = () => {
-        emit('multicharacter:previewCharacter', { identifier })
+        emit('multicharacter:previewCharacter', { uuid })
     }
 
     const onClick = () => {
-        emit('multicharacter:chooseCharacter', { identifier })
+        emit('multicharacter:chooseCharacter', { uuid })
     }
 
     return (
