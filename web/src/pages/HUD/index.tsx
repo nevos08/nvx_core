@@ -28,7 +28,6 @@ export default function HUD() {
             } else if (data.eventName == 'hud:setConfig') {
                 setConfig(data.config)
             } else if (data.eventName == 'hud:setStatus') {
-                console.log(JSON.stringify(data.status))
                 setStatus(data.status)
             }
         }
