@@ -83,7 +83,7 @@ function NVXPlayer(playerId, license, character)
 
     function self.save()
         MySQL.prepare.await("UPDATE characters SET position = ?, skin = ? WHERE uuid = ?",
-            { json.encode(self.getPosition(false)), Config.Skin.Enabled and self.skin or "{}", self.uuid })
+            { json.encode(self.getPosition(false)), Config.Skin.Enabled and json.encode(self.skin) or "{}", self.uuid })
         print("[nvx_core] Saved player with license ", self.license)
     end
 
