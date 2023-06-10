@@ -3,7 +3,7 @@ AddEventHandler("playerConnecting", function(_, _, deferrals)
     deferrals.update(Locales.deferrals["loadingAccount"])
 
     local playerId = source
-    local license = NVX.Functions.Player.GetLicense(playerId)
+    local license = NVX.Functions.GetPlayerLicense(playerId)
     local account = Core.Functions.GetPlayerAccount(license)
 
     if not account then
@@ -24,7 +24,7 @@ AddEventHandler("playerConnecting", function(_, _, deferrals)
 end)
 
 AddEventHandler("playerDropped", function()
-    local player = NVX.Functions.Player.Get(source)
+    local player = NVX.Functions.GetPlayer(source)
     if player then
         player.save()
     end
@@ -32,7 +32,7 @@ end)
 
 RegisterNetEvent("nvx_core:playerJoined", function()
     local playerId = source
-    local license = NVX.Functions.Player.GetLicense(playerId)
+    local license = NVX.Functions.GetPlayerLicense(playerId)
     local account = Core.Functions.GetPlayerAccount(license)
 
     -- Add the players license to his state bag
@@ -101,6 +101,6 @@ RegisterNetEvent("nvx_core:selectCharacter", function(uuid)
 end)
 
 RegisterNetEvent("nvx_core:onPlayerTick", function()
-    local player = NVX.Functions.Player.Get(source)
+    local player = NVX.Functions.GetPlayer(source)
     player.onTick()
 end)

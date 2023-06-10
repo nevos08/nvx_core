@@ -23,7 +23,8 @@ files {
 
 shared_scripts {
     "@ox_lib/init.lua",
-    "config.lua",
+    "config/config.lua",
+    "config/*.lua",
 
     "locales.lua",
     "shared/init.lua",
@@ -40,8 +41,7 @@ server_scripts {
     "server/events.lua",
 
     -- Plugins
-    "plugins/**/server/*.lua",
-    "plugins/**/server/**/*.lua",
+    "plugins/**/server/*",
 }
 
 client_scripts {
@@ -52,8 +52,7 @@ client_scripts {
     "client/main.lua",
 
     -- Plugins
-    "plugins/**/client/*.lua",
-    "plugins/**/client/**/*.lua",
+    "plugins/**/client/*",
 }
 
 dependencies {

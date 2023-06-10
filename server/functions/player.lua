@@ -2,7 +2,7 @@ NVX.Functions.Player = {}
 
 --- Gets a players rockstar license
 ---@param playerId number
-function NVX.Functions.Player.GetLicense(playerId)
+function NVX.Functions.GetPlayerLicense(playerId)
     for _, v in pairs(GetPlayerIdentifiers(playerId)) do
         if string.match(v, 'license:') then
             return string.gsub(v, 'license:', '')
@@ -20,10 +20,6 @@ function NVX.Functions.Player.SetPosition(playerId, pos)
     if pos.w then
         SetEntityHeading(ped, pos.w)
     end
-end
-
-function NVX.Functions.Player.Get(playerId)
-    return Core.Players[playerId]
 end
 
 -- Events

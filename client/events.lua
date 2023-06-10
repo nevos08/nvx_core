@@ -26,9 +26,6 @@ RegisterNetEvent("nvx_core:playerLoaded", function(playerData)
 
         exports["fivem-appearance"]:setPlayerAppearance(playerData.skin)
 
-        TriggerEvent("nvx_core:playerSpawned")
-        TriggerServerEvent("nvx_core:playerSpawned")
-
         DoScreenFadeIn(1000)
         while not IsScreenFadedIn() do
             Wait(10)
@@ -42,5 +39,8 @@ RegisterNetEvent("nvx_core:playerLoaded", function(playerData)
 
         FreezeEntityPosition(PlayerPedId(), false)
         SetEntityInvincible(PlayerPedId(), false)
+
+        TriggerEvent("nvx_core:playerSpawned")
+        TriggerServerEvent("nvx_core:playerSpawned")
     end)
 end)

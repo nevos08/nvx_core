@@ -18,7 +18,7 @@ function Shared.Table.Print(table)
                 for i = 1, nb, 1 do
                     s = s .. "    "
                 end
-                s = s .. '[' .. k .. '] = ' .. Shared.Table.Dump(v, nb + 1) .. ',\n'
+                s = s .. '[' .. k .. '] = ' .. DumpTable(v, nb + 1) .. ',\n'
             end
 
             for i = 1, nb, 1 do

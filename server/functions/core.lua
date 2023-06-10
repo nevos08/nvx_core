@@ -87,22 +87,6 @@ function Core.Functions.CreateCharacter(license, charData, skin)
     local uuid = Core.Functions.GenerateUUID()
     local meta = Config.Default.Meta or {}
 
-    -- Generate a unique phoneNumber for each player
-    meta.phoneNumber = tonumber(Config.GeneratePhoneNumber())
-    local uniquePhoneNumber = false
-    while not uniquePhoneNumber do
-        MySQL.query(
-            "SELECT JSON_UNQUOTE(JSON_EXTRACT(meta, '$.phoneNumber')) AS phoneNumber FROM characters HAVING phoneNumber = ?",
-            { meta.phoneNumber }, function(res)
-                if not res[1] then
-                    uniquePhoneNumber = true
-                end
-            end)
-
-        Wait(100)
-    end
-
-
     MySQL.insert.await(
         "INSERT INTO characters (`uuid`, `license`, `details`, `position`, `skin`, `money`, `meta`) VALUES (?, ?, ?, ?, ?, ?, ?)",
         { uuid, license, json.encode(charData), json.encode(Config.Default.Position), json.encode(skin) or nil,
@@ -131,4 +115,8 @@ function Core.Functions.SelectCharacter(playerId, uuid)
 
     Core.Players[tonumber(playerId)] = player
     player.emit("nvx_core:playerLoaded", player.getPlayerData())
+    TriggerEvent("nvx_core:playerLoaded", player)
+
+    Player(playerId).state:set("uuid", uuid, true)
+    SetPlayerRoutingBucket(playerId, 0)
 end
