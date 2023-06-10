@@ -1,5 +1,4 @@
 local _pages = {}
-local _hiddenOverlays = {}
 local _pageReadyEvents = {}
 
 local function UpdatePages()
