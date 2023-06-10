@@ -39,6 +39,7 @@ RegisterNetEvent("nvx_core:playerLoaded", function(playerData)
 
         FreezeEntityPosition(PlayerPedId(), false)
         SetEntityInvincible(PlayerPedId(), false)
+        DisplayRadar(true)
 
         TriggerEvent("nvx_core:playerSpawned")
         TriggerServerEvent("nvx_core:playerSpawned")

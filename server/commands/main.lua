@@ -14,7 +14,7 @@ end
 NVX.Commands.Add("veh", "owner", function(player, args)
     local coords = player.getPosition(true)
     local vehicle = CreateVehicle(args.model, coords.x, coords.y, coords.z, coords.w, true, true)
-    SetPedIntoVehicle(player.getPed(), vehicle, 0)
+    SetPedIntoVehicle(player.getPed(), vehicle, -1)
 end, {
     help = "Spawne ein Fahrzeug",
     suggestions = {

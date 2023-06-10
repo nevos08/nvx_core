@@ -23,9 +23,7 @@ files {
 
 shared_scripts {
     "@ox_lib/init.lua",
-    "config/config.lua",
-    "config/*.lua",
-
+    "config.lua",
     "locales.lua",
     "shared/init.lua",
     "shared/*.lua"
@@ -35,24 +33,22 @@ server_scripts {
     "@oxmysql/lib/MySQL.lua",
 
     "server/init.lua",
-    "server/functions/*.lua",
-    "server/classes/*.lua",
-    "server/commands/*.lua",
+    "server/functions/*",
+    "server/classes/*",
+    "server/systems/**/*",
+    "server/commands/*",
     "server/events.lua",
-
-    -- Plugins
-    "plugins/**/server/*",
 }
 
 client_scripts {
     "client/init.lua",
-    "client/functions/*.lua",
-    "client/nui/**/*.lua",
+    "client/functions/*",
+    "client/nui/*",
+
+    "client/systems/**/*",
+
     "client/events.lua",
     "client/main.lua",
-
-    -- Plugins
-    "plugins/**/client/*",
 }
 
 dependencies {

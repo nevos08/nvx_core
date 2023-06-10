@@ -99,9 +99,7 @@ RegisterNetEvent("nvx_core:playerLoaded", function(player)
 end)
 
 RegisterNetEvent("nvx_core:status:onTick", function()
-    print("got tick")
     local status = Player(source).state["status"]
-    NVX.Shared.Table.Print(status)
 
     for k, v in pairs(status) do
         local statusConfig = Config.Status.Types[k]
