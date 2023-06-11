@@ -44,9 +44,6 @@ client_scripts {
     "client/init.lua",
     "client/functions/*",
     "client/nui/*",
-
-    "client/systems/**/*",
-
     "client/events.lua",
     "client/main.lua",
 }
