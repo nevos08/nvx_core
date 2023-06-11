@@ -50,8 +50,8 @@ local function RemoveStatus(playerId, status, amount)
     Player(playerId).state:set("status", status, true)
 end
 
-local function SetStatus(playerId, status, amount)
-    local config = Config.Status.Types[status]
+local function SetStatus(playerId, type, amount)
+    local config = Config.Status.Types[type]
     if not config then
         return
     end
@@ -61,8 +61,8 @@ local function SetStatus(playerId, status, amount)
         return
     end
 
-    for k, v in pairs(status) do
-        if v == status then
+    for k, _ in pairs(status) do
+        if k == type then
             if amount > config.max then
                 amount = config.max
             elseif amount < config.min then
@@ -92,9 +92,15 @@ RegisterNetEvent("nvx_core:playerLoaded", function(player)
             end)
 
         return
+    else
+        status = json.decode(status)
+        for k, v in pairs(Config.Status.Types) do
+            if not status[k] then
+                status[k] = v.default
+            end
+        end
     end
 
-    status = json.decode(status)
     Player(player.playerId).state:set("status", status, true)
 end)
 
@@ -125,6 +131,30 @@ AddEventHandler("playerDropped", function()
         MySQL.update("UPDATE characters SET status = ? WHERE uuid = ?", { json.encode(status), uuid })
     end
 end)
+
+NVX.Commands.Add("status:fill", "owner", function(player, args)
+    if not args.playerId then
+        local status = Player(player.playerId).state["status"]
+        for type, _ in pairs(status) do
+            SetStatus(player.playerId, type, Config.Status.Types[type].max)
+        end
+    else
+        local status = Player(args.playerId).state["status"]
+        for type, _ in pairs(status) do
+            SetStatus(args.playerId, type, Config.Status.Types[k].max)
+        end
+    end
+end, {
+    help = "Fill all statuses of a player.",
+    suggestions = {
+        {
+            name = "playerId",
+            type = "playerId",
+            help = "The target players server id",
+            optional = true
+        },
+    }
+})
 
 exports("AddStatus", AddStatus)
 exports("RemoveStatus", RemoveStatus)

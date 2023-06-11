@@ -3,7 +3,6 @@ function NVX.Commands.Add(cmdName, group, cb, params)
         { help = params.help or "", params = params.suggestions or {}, restricted = "group." .. group },
         function(source, args, raw)
             local player = NVX.Functions.GetPlayer(source)
-            print(player)
             if not player then
                 return
             end

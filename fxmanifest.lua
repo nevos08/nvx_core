@@ -35,8 +35,8 @@ server_scripts {
     "server/init.lua",
     "server/functions/*",
     "server/classes/*",
-    "server/systems/**/*",
     "server/commands/*",
+    "server/systems/**/*",
     "server/events.lua",
 }
 
