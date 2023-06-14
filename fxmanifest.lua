@@ -18,7 +18,8 @@ files {
     "web/dist/**/*",
 
     "client/*.lua",
-    "client/**/*.lua"
+    "client/**/*.lua",
+    "imports.lua"
 }
 
 shared_scripts {

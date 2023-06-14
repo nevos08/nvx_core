@@ -116,7 +116,7 @@ function Character({ uuid, name }: Character) {
                 transition: '.2s',
                 cursor: 'pointer',
                 [':hover']: {
-                    backgroundColor: theme.colors.blue[7],
+                    backgroundColor: theme.colors.teal[7],
                 },
             }}
             onMouseEnter={onMouseEnter}
