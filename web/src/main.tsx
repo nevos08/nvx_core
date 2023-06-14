@@ -18,6 +18,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             theme={{
                 colorScheme: 'dark',
                 fontFamily: 'Source Sans Pro',
+                primaryColor: 'green',
+                primaryShade: 5,
             }}
         >
             <LocalesProvider>
